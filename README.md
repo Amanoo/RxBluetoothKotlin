@@ -1,5 +1,4 @@
-[ ![Download](https://api.bintray.com/packages/vincentmasselis/maven/rx-bluetooth-kotlin/images/download.svg) ](https://bintray.com/vincentmasselis/maven/rx-bluetooth-kotlin/_latestVersion)
-[![Build Status](https://app.bitrise.io/app/94c2826fa7361333/status.svg?token=dAysx6Rt7j8iL29CFZlzGQ&branch=master)](https://app.bitrise.io/app/94c2826fa7361333)
+[![Build Status](https://app.bitrise.io/app/94c2826fa7361333/status.svg?token=dAysx6Rt7j8iL29CFZlzGQ&branch=master)](https://app.bitrise.io/app/94c2826fa7361333) [![Maven Central](https://img.shields.io/maven-central/v/com.masselis.rxbluetoothkotlin/rxbluetoothkotlin-core)](https://search.maven.org/search?q=g:com.masselis.rxbluetoothkotlin)
 
 # RxBluetoothKotlin
 Android + BLE + Kotlin + RxJava3
@@ -15,7 +14,7 @@ Starting from Android API 31, the fine location permission is not required anymo
 
 Because of this change, RxBluetoothKotlin was updated to fire the `NeedBluetoothScanPermission` and `NeedBluetoothConnectPermission` exceptions at the right moment if they're missing at the runtime. Theses exceptions are fired since the release `3.2.0`.
 
-[Learn more](https://developer.android.com/guide/topics/connectivity/bluetooth/permissions)
+[Learn more](https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android12-or-higher)
 
 ## ⚠️ Important notice about Maven Central release ⚠️
 **RxBluetoothKotlin is released on Maven Central** since the version `3.1.0` you don't have to worry about this library when jCenter will shutdown ! Unfortunately, according to the Maven Central policies, I must update my package to match with the host domain I own. I only own `masselis.com`, so the package name RxBluetothKotlin were renamed from `com.vincentmasselis.rxbluetoothkotlin` to `com.masselis.rxbluetoothkotlin`, as consequence, <ins>you have to renamed EVERY import from rxbluetoothkotlin to the new package name</ins>.
@@ -75,6 +74,8 @@ rxBluetoothGatt.disconnect().subscribe()
     - From Android 12: `BLUETOOTH_CONNECT`
 * A turned on bluetooth chip `(context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter.isEnabled`
 * You can add to your manifest `<uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />`
+
+RxBluetoothKotlin declare the `BLUETOOTH_SCAN` permission into the AndroidManifest with the property `usesPermissionFlags="neverForLocation"`. If you want to remove the `usesPermissionFlags` property, you have to add `tools:remove="usesPermissionFlags"` to your `uses-permission` node into your own AndroidManifest, if you want to update `usesPermissionFlags` by setting an other value you have to use `tools:replace="usesPermissionFlags"` instead.
 
 ## Logging
 When scanning with `rxScan()` or connecting with `connectRxGatt()`, you can set the `logger` parameter. By setting it, RxBluetoothKotlin will produce a log for every bluetooth input, output, starting scan, error thrown, etc.. I recommend to set it for debugging purposes and/or if you're not familiar with the Android BLE API. It could helps you a lot to understand what's going on between your app and the Bluetooth Low Energy device.
